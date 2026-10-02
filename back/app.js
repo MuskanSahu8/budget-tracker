@@ -17,6 +17,10 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(CookieParser());
+
+app.get("/", (req, res) => {
+    res.send("Budget Tracker Backend is running");
+});
 //routes
 app.use("/api/auth",authRouter);
 app.use("/api/category",categoryRouter);
