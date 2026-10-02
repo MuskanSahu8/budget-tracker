@@ -24,7 +24,6 @@ const CreateBudget = () => {
     try {
       const response = await apiClient.get("/category/get")
       setCategories(response.data.data);
-      alert("budget created")
     } catch (error) {
       console.log(error.message)
     } finally {

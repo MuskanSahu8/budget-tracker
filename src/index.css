@@ -91,39 +91,93 @@ footer {
   color: var(--moss);
 }
  
-/* ==========================================================================
-   Auth forms (sign in / sign up)
-   ========================================================================== */
- 
-.form1,
-.form2 {
-  max-width: 340px;
-  margin: 64px auto;
-  font-family: var(--font-ui);
+/* =========================================================
+   Auth forms (Sign In / Sign Up)
+   ========================================================= */
+
+.signinPage {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+  padding: 50px 80px;
+  background: var(--background);
 }
- 
-fieldset {
-  padding: 28px;
+
+/* ================= LEFT SIDE ================= */
+
+.signinInfo {
+  width: 45%;
+  max-width: 550px;
+}
+
+.signinInfo h1 {
+  font-size: 45px;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+.signinInfo > p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 500px;
+}
+
+.features {
+  margin-top: 30px;
+}
+
+.features p {
+  font-size: 16px;
+  margin: 15px 0;
+  color: var(--ink);
+}
+
+
+/* ================= RIGHT SIDE ================= */
+
+.form1 {
+  width: 400px;
+  max-width: 100%;
+}
+
+.form1 fieldset {
+  padding: 32px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background: var(--card);
   box-shadow: var(--shadow);
 }
- 
-legend {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 600;
+
+.form1 h2 {
+  text-align: center;
+  margin-bottom: 5px;
   color: var(--ink);
-  padding: 0 6px;
 }
- 
+
+.smallText {
+  text-align: center;
+  color: var(--ink-soft);
+  margin-bottom: 25px;
+}
+
+
+/* ================= FORM ================= */
+
 form {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
- 
+
+label {
+  color: var(--ink);
+  font-weight: 500;
+}
+
 input,
 button {
   padding: 11px 13px;
@@ -132,7 +186,107 @@ button {
   font-family: var(--font-ui);
   font-size: 0.95rem;
 }
- 
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--moss);
+}
+
+
+/* ================= PASSWORD ================= */
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordContainer input {
+  padding-right: 45px;
+}
+
+#eyeFeature {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+
+/* ================= BUTTON ================= */
+
+.form1 button {
+  background: var(--moss);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.form1 button:hover {
+  opacity: 0.9;
+}
+
+
+/* ================= SIGNUP TEXT ================= */
+
+.signupText {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--ink-soft);
+}
+
+.signupText a {
+  text-decoration: none;
+  color: var(--moss);
+  font-weight: 600;
+}
+
+.signupText a:hover {
+  text-decoration: underline;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 800px) {
+
+  .signinPage {
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 20px;
+  }
+
+  .signinInfo {
+    width: 100%;
+    text-align: center;
+  }
+
+  .signinInfo h1 {
+    font-size: 35px;
+  }
+
+  .signinInfo > p {
+    margin: auto;
+  }
+
+  .features {
+    display: none;
+  }
+
+  .form1 {
+    width: 100%;
+    max-width: 400px;
+  }
+}
 input {
   background: var(--card);
   color: var(--ink);

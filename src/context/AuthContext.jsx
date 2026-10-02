@@ -14,33 +14,53 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Get logged-in user
+
+  // ================= GET LOGGED-IN USER =================
+
   const getUser = async () => {
     try {
+
       const response = await apiClient.get("/auth/get-user");
 
       console.log("Get User Response:", response.data);
 
-      setUser(response.data.data);
+      // Check your backend response
+      setUser(
+        response.data?.data ||
+        response.data?.user ||
+        null
+      );
 
     } catch (error) {
-      console.log("Get User Error:", error.message);
+
+      console.log(
+        "Get User Error:",
+        error.response?.data || error.message
+      );
 
       setUser(null);
 
     } finally {
+
       setLoading(false);
+
     }
   };
 
-  // Check user when app starts
+
+  // ================= CHECK USER ON APP START =================
+
   useEffect(() => {
     getUser();
   }, []);
 
-  // Login
+
+  // ================= LOGIN =================
+
   const login = async (formData) => {
+
     try {
+
       const response = await apiClient.post(
         "/auth/signin",
         formData
@@ -48,24 +68,62 @@ export const AuthProvider = ({ children }) => {
 
       console.log("Login Response:", response.data);
 
-      setUser(response.data.data);
+      const loggedInUser =
+        response.data?.data ||
+        response.data?.user ||
+        null;
 
-      return response.data.data;
+      if (loggedInUser) {
+        setUser(loggedInUser);
+      }
+
+      return loggedInUser;
 
     } catch (error) {
-      console.log("Login Error:", error.message);
+
+      console.log(
+        "Login Error:",
+        error.response?.data || error.message
+      );
 
       return null;
     }
   };
 
+
+  // ================= LOGOUT =================
+
+  const logout = async () => {
+
+    try {
+
+      await apiClient.post("/auth/logout");
+
+      setUser(null);
+
+    } catch (error) {
+
+      console.log(
+        "Logout Error:",
+        error.response?.data || error.message
+      );
+
+      // Even if backend logout fails,
+      // remove user from frontend state
+      setUser(null);
+    }
+  };
+
+
   const value = {
     user,
     setUser,
     login,
+    logout,
     isAuthenticated: !!user,
     loading
   };
+
 
   return (
     <AuthContext.Provider value={value}>
@@ -74,8 +132,16 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+
 export const useAuth = () => {
+
   const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error(
+      "useAuth must be used inside AuthProvider"
+    );
+  }
 
   return context;
 };

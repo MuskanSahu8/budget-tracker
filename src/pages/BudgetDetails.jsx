@@ -138,7 +138,7 @@ const BudgetDetails = () => {
     <div className='container'>
 
       <div className='budget-container'>
-        <h2>budget Data</h2>
+        <h2>Budget Data</h2>
 
         {budget ? (
           <div className='budget-details-card'>
