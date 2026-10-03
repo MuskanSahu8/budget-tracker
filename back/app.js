@@ -12,7 +12,7 @@ const app = express();
 dotenv.config();
 // middleware
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: "https://budget-tracker-oe82vzftx-a-352e.vercel.app",
     credentials:true
 }));
 app.use(express.json());
