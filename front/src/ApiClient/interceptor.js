@@ -3,43 +3,36 @@ import axios from "axios";
 const apiClient = axios.create({
   baseURL: "https://budget-tracker-backend-hbx7.onrender.com/api",
   withCredentials: true,
+  timeout: 60000, // Render free tier can take ~50s to wake up
 });
 
 apiClient.interceptors.request.use(
   (config) => {
-    console.log(
-      "request send",
-      config.method,
-      config.url
-    );
-
-    console.log(
-      "Full URL:",
-      config.baseURL + config.url
-    );
-
-    console.log(
-      "withCredentials:",
-      config.withCredentials
-    );
-
+    console.log("request send", config.method, config.url);
     return config;
   },
   (error) => {
-    console.log("request error:", error.message);
+    console.log("request error", error.message);
     return Promise.reject(error);
   }
 );
 
 apiClient.interceptors.response.use(
-  (response) => {
-    console.log("response:", response);
-    return response;
-  },
+  (response) => response,
   (error) => {
-    console.log("Response error:", error);
-    console.log("Status:", error.response?.status);
-    console.log("Data:", error.response?.data);
+    // No response = network error, CORS block, timeout, or server asleep
+    if (!error.response) {
+      console.log("Network error:", error.code, error.message);
+      return Promise.reject(error);
+    }
+
+    const status = error.response.status;
+    console.log("Response error:", status, error.response.data);
+
+    if (status === 401 || status === 403) {
+      console.log("unauthorized || forbidden");
+      // redirect to login page
+    }
 
     return Promise.reject(error);
   }

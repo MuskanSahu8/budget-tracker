@@ -9,26 +9,14 @@ import dashboardRouter from "./api/routes/dashboard.routes.js";
 import cors from "cors";
 
 const app = express();
-
 dotenv.config();
-app.use(
-  cors({
-    origin: "https://budget-tracker-oe82vzftx-a-352e.vercel.app",
-    credentials: true,
-    methods: [
-      "GET",
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE",
-      "OPTIONS"
-    ],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization"
-    ]
-  })
-);
+
+app.use(cors({
+  origin: "https://budget-tracker-oe82vzftx-a-352e.vercel.app",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(express.json());
 app.use(CookieParser());
