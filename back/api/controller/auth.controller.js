@@ -107,6 +107,7 @@ export const signout = async (req, res, next) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
+            path:"/",
         }).status(200).json({
             message: "signout successfully"
         })

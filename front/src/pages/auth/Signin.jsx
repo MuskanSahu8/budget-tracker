@@ -9,28 +9,45 @@ const Signin = () => {
 
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onHandleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user = await login(formData);
+    try {
+      setLoading(true);
 
-    if (user) {
-      alert("Signin Successful");
-      navigate("/");
-    } else {
-      alert("Signin failed");
+      const user = await login(formData);
+
+      console.log("LOGIN USER:", user);
+
+      if (user) {
+        alert("Signin Successful");
+        navigate("/");
+      } else {
+        alert("Signin failed");
+      }
+    } catch (error) {
+      console.log("Signin error:", error);
+
+      alert(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Signin failed"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,7 +56,6 @@ const Signin = () => {
 
       {/* LEFT SIDE */}
       <div className="signinInfo">
-
         <h1>Take Control of Your Money 💰</h1>
 
         <p>
@@ -54,13 +70,10 @@ const Signin = () => {
           <p>📈 Understand your spending</p>
           <p>🎯 Reach your financial goals</p>
         </div>
-
       </div>
-
 
       {/* RIGHT SIDE */}
       <div className="form1">
-
         <fieldset>
 
           <h2>Welcome Back! 👋</h2>
@@ -114,21 +127,21 @@ const Signin = () => {
 
             <br />
 
-            <button type="submit">
-              Signin
+            <button type="submit" disabled={loading}>
+              {loading ? "Signing in..." : "Signin"}
             </button>
 
           </form>
 
           <p className="signupText">
             Don't have an account?{" "}
+
             <Link to="/signup">
               Create an account
             </Link>
           </p>
 
         </fieldset>
-
       </div>
 
     </div>

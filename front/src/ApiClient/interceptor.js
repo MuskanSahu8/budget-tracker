@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://budget-tracker-backend-hbx7.onrender.com/api",
+  baseURL: "https://budget-tracker-backend-hbx7.onrender.com/api" ,
   withCredentials: true,
-  timeout: 60000, // Render free tier can take ~50s to wake up
+
 });
 
 apiClient.interceptors.request.use(
@@ -39,3 +39,4 @@ apiClient.interceptors.response.use(
 );
 
 export default apiClient;
+

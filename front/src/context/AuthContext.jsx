@@ -1,18 +1,19 @@
 import {
   createContext,
+  useContext,
   useEffect,
-  useState
+  useState,
 } from "react";
 
 import apiClient from "../ApiClient/interceptor";
-import { useContext } from "react";
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // GET LOGGED-IN USER
+ 
   const getUser = async () => {
     try {
       const response = await apiClient.get("/auth/get-user");
@@ -37,12 +38,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
- 
   useEffect(() => {
     getUser();
   }, []);
 
- 
+  
   const login = async (formData) => {
     try {
       console.log("Login data:", formData);
@@ -63,29 +63,21 @@ export const AuthProvider = ({ children }) => {
         setUser(loggedInUser);
       }
 
-      return {
-        success: true,
-        user: loggedInUser
-      };
+      return loggedInUser;
+
     } catch (error) {
       console.log(
         "Login Error:",
         error.response?.data || error.message
       );
 
-      return {
-        success: false,
-        error:
-          error.response?.data?.message ||
-          error.message
-      };
+      return null;
     }
   };
 
-  // LOGOUT
   const logout = async () => {
     try {
-      await apiClient.post("/auth/logout");
+      await apiClient.post("/auth/signout");
     } catch (error) {
       console.log(
         "Logout Error:",
@@ -96,13 +88,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  
   const value = {
     user,
     setUser,
     login,
     logout,
     isAuthenticated: !!user,
-    loading
+    loading,
   };
 
   return (
@@ -111,8 +104,9 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-export const useAuth = () => {
 
+
+export const useAuth = () => {
   const context = useContext(AuthContext);
 
   if (!context) {

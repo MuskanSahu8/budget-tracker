@@ -8,7 +8,7 @@ const Signout = () => {
     const navigate=useNavigate();
     const logout =async()=>{
         try{
-            await apiClient.post("/auth/sign-out");
+            await apiClient.post("/auth/signout");
             setUser(null);
             navigate("/signin");
         }catch(err){
