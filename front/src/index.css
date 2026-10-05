@@ -1,58 +1,98 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap');
- 
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
 :root {
-  /* Color */
-  --ink: #033d25dc;          /* primary text, headers */
-  --ink-soft: #4a5568;     /* secondary text */
-  --paper: #f6f4ef;        /* page background */
-  --card: #ffffff;         /* surfaces */
-  --line: #e3ddd0;         /* hairlines, borders */
+  --ink: #033d25;
+  --ink-soft: #4a5568;
+  --paper: #f6f4ef;
+  --card: #ffffff;
+  --line: #e3ddd0;
   --line-strong: #cfc7b4;
-  --moss: #2f6f4e;         /* primary action, positive amounts */
-  --moss-deep: #234f38;    /* hover state */
-  --moss-tint: #e8f1eb;    /* light backgrounds on moss */
-  --rust: #a8452e;         /* destructive / cancel */
+
+  --moss: #2f6f4e;
+  --moss-deep: #234f38;
+  --moss-tint: #e8f1eb;
+
+  --rust: #a8452e;
   --rust-tint: #fbece8;
+
   --focus: #2f6f4e;
- 
-  /* Type */
+
   --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
- 
-  /* Scale */
+
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
-  --shadow: 0 1px 2px rgba(22, 35, 61, 0.06), 0 8px 24px rgba(22, 35, 61, 0.06);
+
+  --shadow:
+    0 1px 2px rgba(22, 35, 61, 0.06),
+    0 8px 24px rgba(22, 35, 61, 0.06);
 }
- 
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
- 
+
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
+  width: 100%;
+  min-width: 0;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
- 
-:focus-visible {
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+*:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
- 
-/* ==========================================================================
-   Header / Nav
-   ========================================================================== */
- 
+
+a {
+  text-decoration: none;
+}
+
+/* =========================================================
+   HEADER / NAV
+   ========================================================= */
+
 header {
+  width: 100%;
   background: var(--ink);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
- 
+
 header,
 nav,
 .auth {
@@ -63,7 +103,7 @@ nav,
   padding: 1rem 1.5rem;
   color: #ffffff;
 }
- 
+
 header .link {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
@@ -72,11 +112,16 @@ header .link {
   letter-spacing: 0.01em;
   transition: color 0.15s ease;
 }
- 
+
 header .link:hover {
   color: #ffffff;
 }
- 
+
+.link {
+  text-decoration: none;
+  color: var(--moss);
+}
+
 footer {
   display: flex;
   align-items: center;
@@ -85,27 +130,26 @@ footer {
   color: var(--ink-soft);
   font-size: 0.85rem;
 }
- 
-.link {
-  text-decoration: none;
-  color: var(--moss);
-}
- 
+
 /* =========================================================
-   Auth forms (Sign In / Sign Up)
+   AUTH PAGE
    ========================================================= */
 
 .signinPage {
   min-height: calc(100vh - 70px);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 100px;
-  padding: 50px 80px;
-  background: var(--background);
+
+  gap: 80px;
+
+  padding: 50px 60px;
+
+  background: var(--paper);
 }
 
-/* ================= LEFT SIDE ================= */
+/* LEFT */
 
 .signinInfo {
   width: 45%;
@@ -113,7 +157,8 @@ footer {
 }
 
 .signinInfo h1 {
-  font-size: 45px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 45px);
   line-height: 1.15;
   margin-bottom: 20px;
   color: var(--ink);
@@ -136,8 +181,7 @@ footer {
   color: var(--ink);
 }
 
-
-/* ================= RIGHT SIDE ================= */
+/* RIGHT */
 
 .form1 {
   width: 400px;
@@ -145,9 +189,12 @@ footer {
 }
 
 .form1 fieldset {
+  width: 100%;
   padding: 32px;
+
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
+
   background: var(--card);
   box-shadow: var(--shadow);
 }
@@ -164,8 +211,9 @@ footer {
   margin-bottom: 25px;
 }
 
-
-/* ================= FORM ================= */
+/* =========================================================
+   FORM
+   ========================================================= */
 
 form {
   display: flex;
@@ -181,15 +229,16 @@ label {
 input,
 button {
   padding: 11px 13px;
+
   border-radius: var(--radius-sm);
   border: 1px solid var(--line-strong);
+
   font-family: var(--font-ui);
   font-size: 0.95rem;
 }
 
 input {
   width: 100%;
-  box-sizing: border-box;
   outline: none;
 }
 
@@ -197,8 +246,9 @@ input:focus {
   border-color: var(--moss);
 }
 
-
-/* ================= PASSWORD ================= */
+/* =========================================================
+   PASSWORD
+   ========================================================= */
 
 .passwordContainer {
   position: relative;
@@ -213,14 +263,17 @@ input:focus {
 #eyeFeature {
   position: absolute;
   right: 12px;
+
   display: flex;
   align-items: center;
+
   cursor: pointer;
   color: var(--ink-soft);
 }
 
-
-/* ================= BUTTON ================= */
+/* =========================================================
+   BUTTON
+   ========================================================= */
 
 .form1 button {
   background: var(--moss);
@@ -232,11 +285,12 @@ input:focus {
 }
 
 .form1 button:hover {
-  opacity: 0.9;
+  background: var(--moss-deep);
 }
 
-
-/* ================= SIGNUP TEXT ================= */
+/* =========================================================
+   SIGNUP TEXT
+   ========================================================= */
 
 .signupText {
   text-align: center;
@@ -254,94 +308,132 @@ input:focus {
   text-decoration: underline;
 }
 
+/* =========================================================
+   INPUTS
+   ========================================================= */
 
-/* ================= MOBILE ================= */
-
-@media (max-width: 800px) {
-
-  .signinPage {
-    flex-direction: column;
-    gap: 40px;
-    padding: 40px 20px;
-  }
-
-  .signinInfo {
-    width: 100%;
-    text-align: center;
-  }
-
-  .signinInfo h1 {
-    font-size: 35px;
-  }
-
-  .signinInfo > p {
-    margin: auto;
-  }
-
-  .features {
-    display: none;
-  }
-
-  .form1 {
-    width: 100%;
-    max-width: 400px;
-  }
-}
 input {
   background: var(--card);
   color: var(--ink);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
- 
+
 input:focus {
   outline: none;
   border-color: var(--moss);
   box-shadow: 0 0 0 3px var(--moss-tint);
 }
- 
-button {
-  background: var(--moss);
-  color: #ffffff;
-  border-color: var(--moss);
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+input::placeholder {
+  color: #a3a196;
 }
- 
-button:hover {
-  background: var(--moss-deep);
+
+/* =========================================================
+   GLOBAL BUTTON
+   ========================================================= */
+
+button,
+.btn {
+  padding: 11px 18px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-ui);
+
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+
+  border: 1px solid transparent;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+button:not([type='button']):not(.btn-cancel) {
+  background-color: var(--moss);
+  border-color: var(--moss);
+  color: #ffffff;
+}
+
+button:not([type='button']):not(.btn-cancel):hover {
+  background-color: var(--moss-deep);
   border-color: var(--moss-deep);
 }
- 
-/* ==========================================================================
-   Create Budget
-   ========================================================================== */
- 
+
+button[type='button'],
+.btn-secondary {
+  background-color: var(--paper);
+  color: var(--ink-soft);
+  border: 1px solid var(--line-strong);
+}
+
+button[type='button']:hover,
+.btn-secondary:hover {
+  background-color: #ece8dd;
+  color: var(--ink);
+}
+
+.btn-cancel {
+  background-color: var(--card);
+  color: var(--rust);
+  border: 1px solid var(--rust);
+}
+
+.btn-cancel:hover {
+  background-color: var(--rust-tint);
+}
+
+.form-actions {
+  margin-top: 6px;
+}
+
+.btn-submit-form {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+}
+
+/* =========================================================
+   CREATE BUDGET
+   ========================================================= */
+
 main {
+  width: calc(100% - 32px);
   max-width: 560px;
+
   margin: 48px auto;
   padding: 36px;
+
   background: var(--card);
+
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
+
   box-shadow: var(--shadow);
 }
- 
-h1 {
+
+main h1 {
   font-family: var(--font-display);
   font-size: 1.7rem;
   font-weight: 600;
+
   color: var(--ink);
+
   margin-bottom: 28px;
   text-align: left;
 }
- 
+
 main form {
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
- 
+
 .category,
 .month,
 .year,
@@ -350,510 +442,893 @@ main form {
   flex-direction: column;
   gap: 7px;
 }
- 
-label {
+
+main label {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--ink-soft);
 }
- 
+
 input[type='text'],
 input[type='number'],
 select {
   width: 100%;
+
   padding: 12px 14px;
+
   font-size: 0.95rem;
   font-family: var(--font-ui);
+
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
+
   background-color: var(--card);
   color: var(--ink);
-  box-sizing: border-box;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
- 
+
 input[type='text']:focus,
 input[type='number']:focus,
 select:focus {
   outline: none;
+
   border-color: var(--moss);
+
   box-shadow: 0 0 0 3px var(--moss-tint);
 }
- 
-input::placeholder {
-  color: #a3a196;
-}
- 
+
 .create-category {
   display: flex;
   gap: 8px;
+
   margin-top: 4px;
+
   flex-wrap: wrap;
 }
- 
+
 .create-category input {
   flex: 1;
   min-width: 160px;
 }
- 
-/* Button system --------------------------------------------------------- */
- 
-button,
-.btn {
-  padding: 11px 18px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  font-family: var(--font-ui);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
- 
-/* Primary action */
-button:not([type='button']):not(.btn-cancel),
-button[onClick*='Submit'] {
-  background-color: var(--moss);
-  border-color: var(--moss);
-  color: #ffffff;
-}
- 
-button:not([type='button']):not(.btn-cancel):hover,
-button[onClick*='Submit']:hover {
-  background-color: var(--moss-deep);
-  border-color: var(--moss-deep);
-}
- 
-/* Secondary / utility action */
-button[type='button'],
-.btn-secondary {
-  background-color: var(--paper);
-  color: var(--ink-soft);
-  border: 1px solid var(--line-strong);
-}
- 
-button[type='button']:hover,
-.btn-secondary:hover {
-  background-color: #ece8dd;
-  color: var(--ink);
-}
- 
-/* Destructive */
-.btn-cancel {
-  background-color: var(--card);
-  color: var(--rust);
-  border: 1px solid var(--rust);
-}
- 
-.btn-cancel:hover {
-  background-color: var(--rust-tint);
-}
- 
-.form-actions {
-  margin-top: 6px;
-}
- 
-.btn-submit-form {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-}
- 
-/* ==========================================================================
-   Budget list
-   ========================================================================== */
- 
+
+/* =========================================================
+   BUDGET LIST
+   ========================================================= */
+
 .budget-page {
   min-height: 100vh;
+
   padding: 48px 24px;
+
   background: var(--paper);
   font-family: var(--font-ui);
 }
- 
+
 .budget-page h1 {
+  width: 100%;
   max-width: 900px;
+
   margin: 0 auto 32px;
+
   text-align: left;
 }
- 
+
 .budget-card {
   width: 100%;
   max-width: 620px;
+
   margin: 16px auto;
   padding: 24px 26px;
+
   background: var(--card);
+
   border: 1px solid var(--line);
   border-left: 4px solid var(--moss);
+
   border-radius: var(--radius-md);
+
   box-shadow: var(--shadow);
+
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
- 
+
 .budget-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(23, 35, 60, 0.08), 0 16px 32px rgba(22, 35, 61, 0.1);
+
+  box-shadow:
+    0 4px 8px rgba(23, 35, 60, 0.08),
+    0 16px 32px rgba(22, 35, 61, 0.1);
 }
- 
+
 .budget-card h2 {
   margin: 0 0 12px;
+
   color: var(--ink);
+
   font-family: var(--font-display);
+
   font-size: 1.3rem;
   font-weight: 600;
+
+  overflow-wrap: anywhere;
 }
- 
+
 .budget-card p {
   margin: 6px 0;
+
   color: var(--ink-soft);
+
   font-size: 0.95rem;
+
+  overflow-wrap: anywhere;
 }
- 
+
 .budget-card p:nth-of-type(1) {
   font-family: var(--font-display);
+
   color: var(--moss);
+
   font-weight: 700;
+
   font-size: 1.15rem;
 }
- 
-@media (max-width: 600px) {
-  .budget-page {
-    padding: 28px 16px;
-  }
-  .budget-card {
-    padding: 20px;
-  }
-  .budget-card h2 {
-    font-size: 1.1rem;
-  }
-}
- 
-/* ==========================================================================
-   Budget details / Purchases
-   ========================================================================== */
- .container {
+
+/* =========================================================
+   BUDGET DETAILS
+   ========================================================= */
+
+.container {
   --bg: #eef1f5;
   --surface: #ffffff;
-  --ink: #162e18;
-  --ink-soft: #5b6778;
-  --line: #dde3eb;
+
+  --detail-ink: #162e18;
+  --detail-ink-soft: #5b6778;
+
+  --detail-line: #dde3eb;
+
   --accent: #0f766e;
   --accent-strong: #0b5c56;
   --accent-tint: #e2f3f1;
+
   --danger: #c2384a;
   --danger-tint: #fbe9ec;
+
   --radius: 14px;
   --radius-sm: 8px;
- 
-  box-sizing: border-box;
+
+  width: 100%;
   min-height: 100vh;
+
   max-width: 1080px;
+
   margin: 0 auto;
+
   padding: 40px 24px 64px;
+
   display: grid;
-  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+
+  grid-template-columns:
+    minmax(280px, 380px)
+    minmax(0, 1fr);
+
   gap: 28px;
+
   align-items: start;
-  font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  font-family:
+    "Plus Jakarta Sans",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+
   font-size: 15px;
   line-height: 1.5;
-  color: var(--ink);
+
+  color: var(--detail-ink);
 }
- 
+
 .container *,
 .container *::before,
 .container *::after {
   box-sizing: border-box;
 }
- 
+
 .container h2 {
   margin: 0 0 16px;
+
   font-size: 1.15rem;
   font-weight: 700;
+
   letter-spacing: -0.01em;
 }
- 
+
 .container p {
   margin: 0;
 }
- 
-/* ---------- Budget summary ---------- */
- 
+
+/* =========================================================
+   BUDGET SUMMARY
+   ========================================================= */
+
 .budget-container {
   position: sticky;
   top: 24px;
+
   background: var(--surface);
-  border: 1px solid var(--line);
+
+  border: 1px solid var(--detail-line);
+
   border-radius: var(--radius);
+
   padding: 24px;
-  box-shadow: 0 1px 2px rgba(22, 32, 46, 0.04), 0 8px 24px rgba(22, 32, 46, 0.05);
+
+  box-shadow:
+    0 1px 2px rgba(22, 32, 46, 0.04),
+    0 8px 24px rgba(22, 32, 46, 0.05);
 }
- 
+
 .budget-details-card {
   display: flex;
   flex-direction: column;
 }
- 
+
 .budget-details-card p {
   display: flex;
+
   justify-content: space-between;
+
   gap: 16px;
+
   padding: 10px 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink-soft);
+
+  border-bottom: 1px solid var(--detail-line);
+
+  color: var(--detail-ink-soft);
+
   font-variant-numeric: tabular-nums;
+
   overflow-wrap: anywhere;
 }
- 
-/* The category line acts as the card's title */
+
 .budget-details-card .budget-amount {
   display: block;
+
   padding-top: 0;
+
   font-size: 1.35rem;
+
   font-weight: 700;
-  color: var(--ink);
+
+  color: var(--detail-ink);
+
   letter-spacing: -0.01em;
 }
- 
+
 .budget-not-found {
   padding: 24px 16px;
+
   text-align: center;
-  color: var(--ink-soft);
+
+  color: var(--detail-ink-soft);
+
   background: var(--bg);
+
   border-radius: var(--radius-sm);
 }
- 
-/* ---------- Progress ---------- */
- 
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
 .progress-container {
   margin-top: 20px;
+
   padding: 16px;
+
   background: var(--bg);
+
   border-radius: var(--radius-sm);
 }
- 
+
 .progress-header {
   display: flex;
+
   justify-content: space-between;
+
   align-items: baseline;
+
   margin-bottom: 10px;
+
   font-size: 0.85rem;
-  color: var(--ink-soft);
+
+  color: var(--detail-ink-soft);
 }
- 
+
 .progress-header span:last-child {
   font-size: 1.1rem;
+
   font-weight: 700;
-  color: var(--ink);
+
+  color: var(--detail-ink);
+
   font-variant-numeric: tabular-nums;
 }
- 
+
 .progress-bar {
   height: 10px;
+
   background: #d3dae4;
+
   border-radius: 999px;
+
   overflow: hidden;
 }
- 
+
 .progress-fill {
   height: 100%;
+
   border-radius: 999px;
-  transition: width 0.5s ease, background-color 0.3s ease;
+
+  transition:
+    width 0.5s ease,
+    background-color 0.3s ease;
 }
- 
-/* ---------- Purchases ---------- */
- 
+
+/* =========================================================
+   PURCHASES
+   ========================================================= */
+
 .purchase {
   display: flex;
+
   flex-direction: column;
+
   gap: 12px;
+
   min-width: 0;
 }
- 
+
 .purchase > p {
   padding: 28px 16px;
+
   text-align: center;
-  color: var(--ink-soft);
+
+  color: var(--detail-ink-soft);
+
   background: var(--surface);
-  border: 1px dashed var(--line);
+
+  border: 1px dashed var(--detail-line);
+
   border-radius: var(--radius);
 }
- 
+
 .purchase-list {
   display: grid;
+
   grid-template-columns: 1fr auto;
+
   grid-template-areas:
     "title amount"
-    "note  action";
+    "note action";
+
   align-items: center;
+
   gap: 4px 16px;
+
   padding: 16px 18px;
+
   background: var(--surface);
-  border: 1px solid var(--line);
+
+  border: 1px solid var(--detail-line);
+
   border-radius: var(--radius);
 }
- 
+
 .purchase-list p:nth-child(1) {
   grid-area: title;
+
   font-weight: 600;
+
   overflow-wrap: anywhere;
 }
- 
+
 .purchase-list p:nth-child(2) {
   grid-area: amount;
+
   font-weight: 700;
+
   font-variant-numeric: tabular-nums;
+
   text-align: right;
 }
- 
+
 .purchase-list p:nth-child(3) {
   grid-area: note;
-  color: var(--ink-soft);
+
+  color: var(--detail-ink-soft);
+
   font-size: 0.9rem;
+
   overflow-wrap: anywhere;
 }
- 
+
 .purchase-list button {
   grid-area: action;
+
   justify-self: end;
 }
- 
-/* ---------- Buttons ---------- */
- 
+
+/* =========================================================
+   PURCHASE BUTTONS
+   ========================================================= */
+
 .container button {
   font: inherit;
+
   font-weight: 600;
+
   cursor: pointer;
+
   border: 1px solid transparent;
+
   border-radius: var(--radius-sm);
+
   padding: 9px 16px;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
- 
-/* "Show purchase" button */
+
 .purchase > button {
   align-self: flex-start;
+
   color: var(--accent-strong);
+
   background: var(--accent-tint);
 }
- 
+
 .purchase > button:hover {
   background: #cdeae6;
 }
- 
-/* Delete button */
+
 .purchase-list button {
   padding: 6px 12px;
+
   font-size: 0.85rem;
+
   color: var(--danger);
+
   background: var(--danger-tint);
 }
- 
+
 .purchase-list button:hover {
   background: #f6d5da;
 }
- 
-/* ---------- Form ---------- */
- 
+
+/* =========================================================
+   PURCHASE FORM
+   ========================================================= */
+
 .purchaseForm {
   margin-top: 8px;
+
   padding: 24px;
+
   background: var(--surface);
-  border: 1px solid var(--line);
+
+  border: 1px solid var(--detail-line);
+
   border-radius: var(--radius);
 }
- 
+
 .purchaseForm form {
   display: grid;
+
   gap: 6px;
 }
- 
+
 .purchaseForm label {
   margin-top: 8px;
+
   font-size: 0.85rem;
+
   font-weight: 600;
-  color: var(--ink-soft);
+
+  color: var(--detail-ink-soft);
 }
- 
+
 .purchaseForm input {
   width: 100%;
+
   font: inherit;
-  color: var(--ink);
+
+  color: var(--detail-ink);
+
   background: var(--bg);
+
   border: 1px solid transparent;
+
   border-radius: var(--radius-sm);
+
   padding: 11px 12px;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
- 
+
 .purchaseForm input::placeholder {
   color: #93a0b1;
 }
- 
+
 .purchaseForm input:focus {
   outline: none;
+
   background: var(--surface);
+
   border-color: var(--accent);
+
   box-shadow: 0 0 0 3px rgba(49, 104, 72, 0.18);
 }
- 
-.purchaseForm button[type="Submit"],
+
 .purchaseForm button[type="submit"] {
   margin-top: 16px;
+
   padding: 12px 16px;
+
   color: #fff;
+
   background: var(--accent);
 }
- 
-.purchaseForm button[type="Submit"]:hover,
+
 .purchaseForm button[type="submit"]:hover {
   background: var(--accent-strong);
 }
- 
-/* ---------- Keyboard focus ---------- */
- 
-.container button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
- 
-/* ---------- Responsive ---------- */
- 
-@media (max-width: 800px) {
-  .container {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 20px 16px 48px;
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  /* NAV */
+  header,
+  nav,
+  .auth {
+    gap: 1rem;
+    padding: 14px 18px;
   }
- 
+
+  /* AUTH */
+  .signinPage {
+    gap: 40px;
+    padding: 40px 30px;
+  }
+
+  .signinInfo {
+    width: 50%;
+  }
+
+  .signinInfo h1 {
+    font-size: 36px;
+  }
+
+  /* DETAILS */
+  .container {
+    grid-template-columns: 1fr;
+
+    padding: 30px 20px 50px;
+
+    gap: 24px;
+  }
+
   .budget-container {
     position: static;
   }
 }
- 
-@media (max-width: 420px) {
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  /* HEADER */
+
+  header,
+  nav,
+  .auth {
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 12px 14px;
+  }
+
+  header .link {
+    font-size: 0.85rem;
+  }
+
+  /* AUTH */
+
+  .signinPage {
+    min-height: auto;
+
+    flex-direction: column;
+
+    gap: 30px;
+
+    padding: 35px 16px 50px;
+  }
+
+  .signinInfo {
+    width: 100%;
+
+    max-width: 550px;
+
+    text-align: center;
+  }
+
+  .signinInfo h1 {
+    font-size: 32px;
+
+    margin-bottom: 14px;
+  }
+
+  .signinInfo > p {
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    margin: 0 auto;
+  }
+
+  .features {
+    display: none;
+  }
+
+  .form1 {
+    width: 100%;
+
+    max-width: 420px;
+  }
+
+  .form1 fieldset {
+    padding: 24px 18px;
+  }
+
+  /* CREATE BUDGET */
+
+  main {
+    width: calc(100% - 24px);
+
+    margin: 24px auto;
+
+    padding: 24px 18px;
+
+    border-radius: 12px;
+  }
+
+  main h1 {
+    font-size: 1.5rem;
+
+    margin-bottom: 22px;
+  }
+
+  main form {
+    gap: 18px;
+  }
+
+  .create-category {
+    flex-direction: column;
+  }
+
+  .create-category input {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+  .create-category button {
+    width: 100%;
+  }
+
+  /* BUDGET LIST */
+
+  .budget-page {
+    padding: 28px 14px 40px;
+  }
+
+  .budget-page h1 {
+    font-size: 1.5rem;
+
+    margin-bottom: 22px;
+  }
+
+  .budget-card {
+    padding: 20px;
+
+    margin: 12px auto;
+  }
+
+  .budget-card h2 {
+    font-size: 1.15rem;
+  }
+
+  .budget-card p {
+    font-size: 0.9rem;
+  }
+
+  /* DETAILS */
+
+  .container {
+    padding: 20px 14px 40px;
+
+    gap: 18px;
+  }
+
+  .budget-container {
+    padding: 18px;
+  }
+
+  .budget-details-card p {
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+  .budget-details-card .budget-amount {
+    font-size: 1.2rem;
+  }
+
+  .progress-container {
+    padding: 14px;
+  }
+
+  .purchaseForm {
+    padding: 18px;
+  }
+
   .purchase-list {
     grid-template-columns: 1fr;
+
     grid-template-areas:
       "title"
       "amount"
       "note"
       "action";
+
+    gap: 8px;
   }
- 
+
   .purchase-list p:nth-child(2) {
     text-align: left;
   }
- 
+
   .purchase-list button {
     justify-self: start;
+
+    width: 100%;
+  }
+
+  .purchase > button {
+    width: 100%;
   }
 }
- 
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  header,
+  nav,
+  .auth {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    text-align: center;
+  }
+
+  header .link {
+    display: block;
+
+    padding: 5px;
+  }
+
+  .signinPage {
+    padding: 25px 12px 40px;
+  }
+
+  .signinInfo h1 {
+    font-size: 28px;
+  }
+
+  .signinInfo > p {
+    font-size: 14px;
+  }
+
+  .form1 fieldset {
+    padding: 20px 14px;
+  }
+
+  .form1 h2 {
+    font-size: 1.3rem;
+  }
+
+  main {
+    width: calc(100% - 16px);
+
+    padding: 20px 14px;
+  }
+
+  main h1 {
+    font-size: 1.35rem;
+  }
+
+  .budget-page {
+    padding: 22px 10px 35px;
+  }
+
+  .budget-card {
+    padding: 17px;
+
+    border-left-width: 3px;
+  }
+
+  .budget-card h2 {
+    font-size: 1.05rem;
+  }
+
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .budget-container,
+  .purchaseForm {
+    padding: 15px;
+  }
+
+  .purchase-list {
+    padding: 14px;
+  }
+
+  button,
+  .btn {
+    min-height: 44px;
+  }
+
+  input,
+  select {
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
-  .container *,
-  .container *::before,
-  .container *::after {
+
+  *,
+  *::before,
+  *::after {
     transition: none !important;
+
+    scroll-behavior: auto !important;
   }
 }
- 
