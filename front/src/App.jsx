@@ -18,10 +18,6 @@ const App = () => {
       element: <Layout />,
       children: [
 
-        {
-          path: "/budget",
-          element: <Buget />
-        },
 
         {
           path: "/signin",
@@ -47,6 +43,10 @@ const App = () => {
               element: <Dashboard />
             },
 
+            {
+              path: "/budget",
+              element: <Buget />
+            },
             {
               path: "/createbudget",
               element: <CreateBudget />

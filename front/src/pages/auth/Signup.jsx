@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import apiClient from "../../ApiClient/interceptor";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, NavLink } from "react-router-dom";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -58,17 +58,17 @@ const Signup = () => {
 
         <h1>Start Managing Your Money 💰</h1>
 
-        <p>
+        <span className="accent">
           Create your Budget Tracker account and take control
           of your everyday spending. Keep your income,
           expenses and budgets organized in one place.
-        </p>
+        </span>
 
         <div className="features">
-          <p>📊 Track your expenses</p>
-          <p>💵 Manage your monthly budget</p>
-          <p>📈 Understand your spending habits</p>
-          <p>🎯 Work towards your financial goals</p>
+          <p> <span className="icon">📊</span> Track your expenses</p>
+          <p> <span className="icon">💵</span> Manage your monthly budget</p>
+          <p> <span className="icon">📈</span> Understand your spending habits</p>
+          <p> <span className="icon">🎯</span> Work towards your financial goals</p>
         </div>
 
       </div>
@@ -152,9 +152,9 @@ const Signup = () => {
 
           <p className="signupText">
             Already have an account?{" "}
-            <Link to="/signin">
+            <NavLink  className="link cta" to="/signin">
               Sign in
-            </Link>
+            </NavLink>
           </p>
 
         </fieldset>
