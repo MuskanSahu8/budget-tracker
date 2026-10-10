@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000/api",
-  // baseURL: "https://budget-tracker-backend-hbx7.onrender.com/api" ,
+  baseURL: "https://budget-tracker-backend-hbx7.onrender.com/api" ,
   withCredentials: true,
 
 });
