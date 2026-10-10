@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import apiClient from '../ApiClient/interceptor';
 import { useParams } from 'react-router-dom';
+import { FiTrash2, FiRefreshCw, FiPlus } from 'react-icons/fi'
 
 const BudgetDetails = () => {
   //use params 
   const { budgetId } = useParams();
-  const {id} =useParams();
+  const { id } = useParams();
   //budgetStatus
   const [budget, setBudget] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -63,7 +64,7 @@ const BudgetDetails = () => {
         note: ""
       });
       await showPurchase();
-      alert("purchase created")
+     
     } catch (error) {
       console.log(error.message);
       setError(
@@ -81,7 +82,7 @@ const BudgetDetails = () => {
       const response = await apiClient.get(`/purchase/get/${budgetId}`);
       console.log(response.data);
       setPurchase(response.data.purchase);
-       setTotalSpent(response.data.totalSpent);
+      setTotalSpent(response.data.totalSpent);
     } catch (error) {
       console.log(error.message);
       setError(
@@ -102,28 +103,27 @@ const BudgetDetails = () => {
     return <h2>Loading...</h2>;
   }
 
-  const deletePurchase = async(id)=>{
-    
-   try {
-    console.log("PURCHASE ID:", id)
-     await apiClient.delete(`/purchase/delete/${id}`);
+  const deletePurchase = async (id) => {
+
+    try {
+      console.log("PURCHASE ID:", id)
+      await apiClient.delete(`/purchase/delete/${id}`);
       await showPurchase();
 
-    alert("Purchase deleted successfully");
 
-   } catch (error) {
-    console.log(error.message);
+    } catch (error) {
+      console.log(error.message);
       setError(
         error.response?.data?.message || "failed to delete purchase data"
       )
-   }
+    }
   }
-  const  budgetAmount=Number(budget ?.amount || 0);
-  const progress = budgetAmount > 0 ?  Math.min ((totalSpent /budgetAmount) *100 ,
-  100):0;
+  const budgetAmount = Number(budget?.amount || 0);
+  const progress = budgetAmount > 0 ? Math.min((totalSpent / budgetAmount) * 100,
+    100) : 0;
 
-  const remaining =budgetAmount -totalSpent;
-   
+  const remaining = budgetAmount - totalSpent;
+
   let progressColor = "#22c55e";
 
   if (progress >= 70 && progress < 100) {
@@ -132,7 +132,7 @@ const BudgetDetails = () => {
 
   if (progress >= 100) {
     progressColor = "#ef4444";
-  }  
+  }
 
   return (
     <div className='container'>
@@ -151,7 +151,7 @@ const BudgetDetails = () => {
             <p>Month: {budget.month}</p>
             <p>Year: {budget.year}</p>
             <p>created By: {budget.user.userName}</p>
-             <div className="progress-container">
+            <div className="progress-container">
 
               <div className="progress-header">
 
@@ -182,10 +182,18 @@ const BudgetDetails = () => {
         ) : (
           <p className='budget-not-found'>budget not found</p>
         )}
-       
+
       </div>
       <div className='purchase'>
-        <button onClick={showPurchase}> show purchase</button>
+        <button
+          type="button"
+          className="icon-btn"
+          aria-label="Refresh purchases"
+          title="Refresh purchases"
+          onClick={showPurchase}
+        >
+          <FiRefreshCw />
+        </button>
         <h3>total spend :{totalSpent}</h3>
         {
           purchaseLoading ? (
@@ -196,23 +204,33 @@ const BudgetDetails = () => {
                   <p>Title:{p.title}</p>
                   <p>Total Spent: ₹{p.amount}</p>
                   <p>Note:{p.note}</p>
-                  <button onClick={()=>deletePurchase(p._id)}>Delete Purchase</button>
+                  <button
+                    type="button"
+                    className="icon-btn"
+                    aria-label="Delete purchase"
+                    title="Delete purchase"
+                    onClick={() => deletePurchase(p._id)}
+                  >
+                    <FiTrash2 />
+                  </button>
                 </div>))
               )
           )
         }
         <div className='purchaseForm'>
-        <h2>create your purchase </h2>
-        <form onSubmit={handlePurchase}>
-          <label htmlFor='title'>Title</label>
-          <input type="text" name="title" placeholder='enter title' value={purchaseForm.title} onChange={handleChange} />
-          <label htmlFor="number">Amount</label>
-          <input type="number" name="amount" placeholder='enter amount' value={purchaseForm.amount} onChange={handleChange} />
-          <label htmlFor='note'>Note</label>
-          <input type="text" name="note" placeholder='enter a note' value={purchaseForm.note} onChange={handleChange} />
-          <button type='Submit'>Create</button>
-        </form>
-      </div>
+          <h2>create your purchase </h2>
+          <form onSubmit={handlePurchase}>
+            <label htmlFor='title'>Title</label>
+            <input type="text" name="title" placeholder='enter title' value={purchaseForm.title} onChange={handleChange} />
+            <label htmlFor="number">Amount</label>
+            <input type="number" name="amount" placeholder='enter amount' value={purchaseForm.amount} onChange={handleChange} />
+            <label htmlFor='note'>Note</label>
+            <input type="text" name="note" placeholder='enter a note' value={purchaseForm.note} onChange={handleChange} />
+            <button type="submit">
+              <FiPlus /> Create
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   )

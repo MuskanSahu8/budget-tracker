@@ -1,6 +1,16 @@
 import { Budget } from "../modal/budget.schema.js";
 import { Purchase } from "../modal/purchase.schema.js";
 
+const getMonthRange = (month) => {
+  // expects "YYYY-MM", e.g. "2026-10"
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month || "")) return null;
+
+  const [year, mon] = month.split("-").map(Number);
+  return {
+    start: new Date(Date.UTC(year, mon - 1, 1)),
+    end: new Date(Date.UTC(year, mon, 1)), // first day of next month
+  };
+};
 export const getDashboardData = async (req, res, next) => {
   try {
     // 1. Get all budgets of current user
@@ -11,18 +21,23 @@ export const getDashboardData = async (req, res, next) => {
       .sort({ createdAt: -1 });
 
     // 2. Get all purchases of current user
-    const purchases = await Purchase.find({
-      user: req.user._id,
-    })
-      .populate("category")
-      .populate("budget")
-      .sort({ date: -1, createdAt: -1 });
-
-    // 3. Calculate total budget
+        // 3. Calculate total budget
     const totalBudget = budgets.reduce(
       (acc, item) => acc + (Number(item.amount) || 0),
       0
     );
+   // 2. Get purchases of current user (optionally filtered by month)
+const purchaseQuery = { user: req.user._id };
+
+const range = getMonthRange(req.query.month);
+if (range) {
+  purchaseQuery.date = { $gte: range.start, $lt: range.end };
+}
+
+const purchases = await Purchase.find(purchaseQuery)
+  .populate("category")
+  .populate("budget")
+  .sort({ date: -1, createdAt: -1 });
 
     // 4. Calculate total spent
     const totalSpent = purchases.reduce(

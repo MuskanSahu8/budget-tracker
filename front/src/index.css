@@ -1,19 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap');
 
+/* =========================================================
+   DARK THEME: global styles
+   Change the colours in :root and the whole app follows.
+========================================================= */
+
 :root {
-  /* Color */
-  --ink: #033d25;          /* primary text, headers (solid, no transparency) */
-  --ink-soft: #4a5568;     /* secondary text */
-  --paper: #f6f4ef;        /* page background */
-  --card: #ffffff;         /* surfaces */
-  --line: #e3ddd0;         /* hairlines, borders */
-  --line-strong: #cfc7b4;
-  --moss: #2f6f4e;         /* primary action, positive amounts */
-  --moss-deep: #234f38;    /* hover state */
-  --moss-tint: #e8f1eb;    /* light backgrounds on moss */
-  --rust: #a8452e;         /* destructive / cancel */
-  --rust-tint: #fbece8;
-  --focus: #2f6f4e;
+  color-scheme: dark; /* dark scrollbars, select popups, date pickers */
+
+  /* Surfaces */
+  --paper: #0a100e;        /* page background */
+  --card: #111a17;         /* cards, panels */
+  --input-bg: #0e1613;     /* inputs, inset areas */
+  --nav-bg: #033d25;       /* header bar (same green as before) */
+
+  /* Text */
+  --ink: #e8f1ec;          /* primary text */
+  --ink-soft: #92a69d;     /* secondary text */
+  --ink-faint: #66796f;    /* placeholders */
+
+  /* Lines */
+  --line: #1f2e29;
+  --line-strong: #2a3d37;
+
+  /* Accent (green): positive amounts, links, tags */
+  --moss: #34d399;
+  --moss-deep: #6ee7b7;
+  --moss-tint: rgba(52, 211, 153, 0.12);
+
+  /* Primary action (indigo, same as the dashboard) */
+     --primary: #34d399;
+  --primary-deep: #10b981;
+  --primary-tint: rgba(52, 211, 153, 0.12);
+  --primary-text: #6ee7b7;
+
+  /* Destructive */
+  --rust: #f87171;
+  --rust-tint: rgba(248, 113, 113, 0.12);
+
+  --focus: #34d399;
 
   /* Type */
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
@@ -23,7 +48,7 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
-  --shadow: 0 1px 2px rgba(3, 61, 37, 0.06), 0 8px 24px rgba(3, 61, 37, 0.06);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -68,9 +93,8 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  /* vertical 1rem, horizontal lines up with a 1200px content width */
   padding: 1rem max(1.5rem, calc((100% - 1200px) / 2));
-  background: var(--ink);
+  background: var(--nav-bg);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
@@ -135,7 +159,6 @@ header .link.active {
   color: #ffffff;
 }
 
-/* animated underline on hover / active page */
 header .link::after {
   content: '';
   position: absolute;
@@ -157,7 +180,7 @@ header .link.active::after {
 /* signup pill button */
 header .link.cta {
   background: #ffffff;
-  color: var(--moss-deep);
+  color: #033d25;
   padding: 8px 18px;
   border-radius: 999px;
   font-weight: 600;
@@ -168,8 +191,8 @@ header .link.cta::after {
 }
 
 header .link.cta:hover {
-  color: var(--ink);
-  background: var(--moss-tint);
+  color: #033d25;
+  background: #d1fae5;
 }
 
 footer {
@@ -197,7 +220,7 @@ footer {
   }
 
   .nav-links {
-    display: none;            /* hidden until toggled */
+    display: none;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
@@ -233,8 +256,6 @@ footer {
     radial-gradient(circle at 85% 15%, var(--moss-tint) 0, transparent 45%),
     var(--paper);
 }
-
-/* ================= LEFT SIDE ================= */
 
 .signinInfo {
   width: 45%;
@@ -284,8 +305,6 @@ footer {
   flex-shrink: 0;
 }
 
-/* ================= RIGHT SIDE ================= */
-
 .form1 {
   width: 400px;
   max-width: 100%;
@@ -311,8 +330,6 @@ footer {
   margin-bottom: 18px;
 }
 
-/* ================= FORM ================= */
-
 form {
   display: flex;
   flex-direction: column;
@@ -337,28 +354,26 @@ input {
   width: 100%;
   box-sizing: border-box;
   outline: none;
-  background: var(--card);
+  background: var(--input-bg);
   color: var(--ink);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: var(--moss);
-  box-shadow: 0 0 0 3px var(--moss-tint);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
 }
 
-/* Replace the browser's blue autofill background */
+/* Replace the browser's autofill background */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px var(--card) inset;
+  -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset;
   -webkit-text-fill-color: var(--ink);
   caret-color: var(--ink);
   transition: background-color 9999s ease-in-out 0s;
 }
-
-/* ================= PASSWORD ================= */
 
 .passwordContainer {
   position: relative;
@@ -379,10 +394,8 @@ input:-webkit-autofill:focus {
   color: var(--ink-soft);
 }
 
-/* ================= BUTTON ================= */
-
 .form1 button {
-  background: var(--moss);
+  background: var(--primary);
   color: white;
   border: none;
   cursor: pointer;
@@ -391,10 +404,8 @@ input:-webkit-autofill:focus {
 }
 
 .form1 button:hover {
-  opacity: 0.9;
+  background: var(--primary-deep);
 }
-
-/* ================= SIGNUP TEXT ================= */
 
 .signupText {
   text-align: center;
@@ -412,8 +423,6 @@ input:-webkit-autofill:focus {
   text-decoration: underline;
 }
 
-/* ================= ENTRANCE ANIMATION ================= */
-
 .signinInfo,
 .form1 {
   animation: fadeUp 0.5s ease both;
@@ -428,10 +437,7 @@ input:-webkit-autofill:focus {
   to   { opacity: 1; transform: none; }
 }
 
-/* ================= MOBILE ================= */
-
 @media (max-width: 800px) {
-
   .signinPage {
     flex-direction: column;
     gap: 40px;
@@ -466,17 +472,17 @@ input:-webkit-autofill:focus {
    ========================================================================== */
 
 button {
-  background: var(--moss);
+  background: var(--primary);
   color: #ffffff;
-  border-color: var(--moss);
+  border-color: var(--primary);
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 button:hover {
-  background: var(--moss-deep);
-  border-color: var(--moss-deep);
+  background: var(--primary-deep);
+  border-color: var(--primary-deep);
 }
 
 /* ==========================================================================
@@ -531,7 +537,7 @@ select {
   font-family: var(--font-ui);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background-color: var(--card);
+  background-color: var(--input-bg);
   color: var(--ink);
   box-sizing: border-box;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -541,12 +547,12 @@ input[type='text']:focus,
 input[type='number']:focus,
 select:focus {
   outline: none;
-  border-color: var(--moss);
-  box-shadow: 0 0 0 3px var(--moss-tint);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
 }
 
 input::placeholder {
-  color: #a3a196;
+  color: var(--ink-faint);
 }
 
 .create-category {
@@ -578,40 +584,42 @@ button,
 /* Primary action */
 button:not([type='button']):not(.btn-cancel),
 button[onClick*='Submit'] {
-  background-color: var(--moss);
-  border-color: var(--moss);
+  background-color: var(--primary);
+  border-color: var(--primary);
   color: #ffffff;
 }
 
 button:not([type='button']):not(.btn-cancel):hover,
 button[onClick*='Submit']:hover {
-  background-color: var(--moss-deep);
-  border-color: var(--moss-deep);
+  background-color: var(--primary-deep);
+  border-color: var(--primary-deep);
 }
 
 /* Secondary / utility action */
 button[type='button'],
 .btn-secondary {
-  background-color: var(--paper);
+  background-color: var(--input-bg);
   color: var(--ink-soft);
   border: 1px solid var(--line-strong);
 }
 
 button[type='button']:hover,
 .btn-secondary:hover {
-  background-color: #ece8dd;
+  background-color: #16221e;
+  border-color: var(--line-strong);
   color: var(--ink);
 }
 
 /* Destructive */
 .btn-cancel {
-  background-color: var(--card);
+  background-color: transparent;
   color: var(--rust);
   border: 1px solid var(--rust);
 }
 
 .btn-cancel:hover {
   background-color: var(--rust-tint);
+  border-color: var(--rust);
 }
 
 .form-actions {
@@ -630,66 +638,213 @@ button[type='button']:hover,
 
 .budget-page {
   min-height: 100vh;
-  padding: 48px 24px;
+  padding: 48px 24px 64px;
   background: var(--paper);
   font-family: var(--font-ui);
 }
 
-.budget-page h1 {
-  max-width: 900px;
-  margin: 0 auto 32px;
-  text-align: left;
+.budget-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.budget-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.budget-header h1 {
+  margin: 0 0 6px;
+  font-size: 2rem;
+}
+
+.budget-subtitle {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.budget-cta {
+  display: inline-block;
+  padding: 11px 20px;
+  background: var(--primary);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.budget-cta:hover {
+  background: var(--primary-deep);
+}
+
+.budget-summary {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 28px;
+  padding: 18px 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.budget-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.budget-summary > div + div {
+  padding-left: 40px;
+  border-left: 1px solid var(--line);
+}
+
+.summary-label {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.summary-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
 }
 
 .budget-card {
-  width: 100%;
-  max-width: 620px;
-  margin: 16px auto;
-  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 24px;
   background: var(--card);
   border: 1px solid var(--line);
   border-left: 4px solid var(--moss);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow);
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
 .budget-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(3, 61, 37, 0.08), 0 16px 32px rgba(3, 61, 37, 0.1);
+  border-color: var(--line-strong);
+  border-left-color: var(--moss);
+}
+
+.budget-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .budget-card h2 {
-  margin: 0 0 12px;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
   color: var(--ink);
-  font-size: 1.3rem;
+  text-transform: capitalize;
+  overflow-wrap: anywhere;
+}
+
+.budget-month {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  background: var(--moss-tint);
+  color: var(--moss-deep);
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 600;
 }
 
-.budget-card p {
-  margin: 6px 0;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
+.budget-card .budget-amount {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--moss);
+  font-variant-numeric: tabular-nums;
 }
 
-.budget-card p:nth-of-type(1) {
-  font-family: var(--font-display);
-  color: var(--moss);
-  font-weight: 700;
-  font-size: 1.15rem;
+.budget-card .budget-meta {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.budget-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 56px 24px;
+  text-align: center;
+  background: var(--card);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+}
+
+.budget-empty h2 {
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.budget-empty p {
+  margin-bottom: 8px;
+  color: var(--ink-soft);
 }
 
 @media (max-width: 600px) {
   .budget-page {
-    padding: 28px 16px;
+    padding: 28px 16px 48px;
   }
+
+  .budget-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .budget-cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  .budget-summary {
+    gap: 24px;
+    padding: 16px 18px;
+  }
+
+  .budget-summary > div + div {
+    padding-left: 24px;
+  }
+
   .budget-card {
     padding: 20px;
   }
-  .budget-card h2 {
-    font-size: 1.1rem;
-  }
+}
+
+.budget-status {
+  padding: 24px 0;
+  color: var(--ink-soft);
+}
+
+.budget-error {
+  color: var(--rust);
 }
 
 /* ==========================================================================
@@ -697,18 +852,22 @@ button[type='button']:hover,
    ========================================================================== */
 
 .container {
-  --bg: #eef1f5;
-  --surface: #ffffff;
-  --ink: #162e18;
-  --ink-soft: #5b6778;
-  --line: #dde3eb;
-  --accent: #0f766e;
-  --accent-strong: #0b5c56;
-  --accent-tint: #e2f3f1;
-  --danger: #c2384a;
-  --danger-tint: #fbe9ec;
+   --bg: #0e1613;
+  --surface: #111a17;
+  --ink: #e8f1ec;
+  --ink-soft: #92a69d;
+  --line: #1f2e29;
+  
+  /* Primary Green Accent Upgrades (Goodbye Purple) */
+  --accent: #34d399;
+  --accent-strong: #6ee7b7;
+  --accent-tint: rgba(52, 211, 153, 0.12);
+  
+  --danger: #f87171;
+  --danger-tint: rgba(248, 113, 113, 0.12);
   --radius: 14px;
   --radius-sm: 8px;
+
 
   box-sizing: border-box;
   min-height: 100vh;
@@ -742,8 +901,6 @@ button[type='button']:hover,
   margin: 0;
 }
 
-/* ---------- Budget summary ---------- */
-
 .budget-container {
   position: sticky;
   top: 24px;
@@ -751,7 +908,7 @@ button[type='button']:hover,
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 24px;
-  box-shadow: 0 1px 2px rgba(22, 32, 46, 0.04), 0 8px 24px rgba(22, 32, 46, 0.05);
+  box-shadow: var(--shadow);
 }
 
 .budget-details-card {
@@ -770,7 +927,6 @@ button[type='button']:hover,
   overflow-wrap: anywhere;
 }
 
-/* The category line acts as the card's title */
 .budget-details-card .budget-amount {
   display: block;
   padding-top: 0;
@@ -794,6 +950,7 @@ button[type='button']:hover,
   margin-top: 20px;
   padding: 16px;
   background: var(--bg);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
 }
 
@@ -815,7 +972,7 @@ button[type='button']:hover,
 
 .progress-bar {
   height: 10px;
-  background: #d3dae4;
+  background: var(--line);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -900,10 +1057,12 @@ button[type='button']:hover,
   align-self: flex-start;
   color: var(--accent-strong);
   background: var(--accent-tint);
+  border-color: transparent;
 }
 
 .purchase > button:hover {
-  background: #cdeae6;
+  background: rgba(99, 102, 241, 0.26);
+  border-color: transparent;
 }
 
 /* Delete button */
@@ -912,10 +1071,12 @@ button[type='button']:hover,
   font-size: 0.85rem;
   color: var(--danger);
   background: var(--danger-tint);
+  border-color: transparent;
 }
 
 .purchase-list button:hover {
-  background: #f6d5da;
+  background: rgba(248, 113, 113, 0.22);
+  border-color: transparent;
 }
 
 /* ---------- Form ---------- */
@@ -945,21 +1106,21 @@ button[type='button']:hover,
   font: inherit;
   color: var(--ink);
   background: var(--bg);
-  border: 1px solid transparent;
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
   padding: 11px 12px;
   transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .purchaseForm input::placeholder {
-  color: #93a0b1;
+  color: var(--ink-faint);
 }
 
 .purchaseForm input:focus {
   outline: none;
-  background: var(--surface);
+  background: var(--bg);
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(49, 104, 72, 0.18);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
 }
 
 .purchaseForm button[type="Submit"],
@@ -972,17 +1133,13 @@ button[type='button']:hover,
 
 .purchaseForm button[type="Submit"]:hover,
 .purchaseForm button[type="submit"]:hover {
-  background: var(--accent-strong);
+  background: var(--primary-deep);
 }
-
-/* ---------- Keyboard focus ---------- */
 
 .container button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
-
-/* ---------- Responsive ---------- */
 
 @media (max-width: 800px) {
   .container {
@@ -1014,8 +1171,6 @@ button[type='button']:hover,
   }
 }
 
-/* ---------- Reduced motion ---------- */
-
 @media (prefers-reduced-motion: reduce) {
   .container *,
   .container *::before,
@@ -1026,5 +1181,223 @@ button[type='button']:hover,
   .signinInfo,
   .form1 {
     animation: none;
+  }
+}
+
+
+/* =========================================================
+   MOTION + DEPTH
+   (animations and layered shadows; appended last so it wins)
+========================================================= */
+
+:root {
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.35), 0 12px 30px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 6px 12px rgba(0, 0, 0, 0.4), 0 24px 48px rgba(0, 0, 0, 0.5);
+  --glow-primary: 0 8px 22px rgba(99, 102, 241, 0.4);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes growX {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* NOTE: "backwards" fill mode is used on purpose, so hover
+   transforms still work after the entrance animation ends. */
+
+/* ---------- Header ---------- */
+
+header {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+  animation: dropIn 0.5s var(--ease) backwards;
+}
+
+header .link.cta {
+  transition: background 0.15s, transform 0.2s var(--ease), box-shadow 0.2s;
+}
+
+header .link.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Page entrances ---------- */
+
+main {
+  box-shadow: var(--shadow-lg);
+  animation: riseIn 0.6s var(--ease) backwards;
+}
+
+.budget-header {
+  animation: riseIn 0.5s var(--ease) backwards;
+}
+
+.budget-summary {
+  box-shadow: var(--shadow-md);
+  animation: riseIn 0.55s var(--ease) 0.08s backwards;
+}
+
+.budget-empty {
+  animation: popIn 0.5s var(--ease) backwards;
+}
+
+.budget-container {
+  box-shadow: var(--shadow-lg);
+  animation: riseIn 0.6s var(--ease) backwards;
+}
+
+.purchase {
+  animation: riseIn 0.6s var(--ease) 0.1s backwards;
+}
+
+.purchaseForm {
+  box-shadow: var(--shadow-md);
+  animation: popIn 0.4s var(--ease) backwards;
+}
+
+.form1 fieldset {
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(99, 102, 241, 0.08);
+}
+
+/* ---------- Budget list cards (scoped so the dashboard is untouched) ---------- */
+
+.budget-grid .budget-card {
+  box-shadow: var(--shadow-sm);
+  animation: riseIn 0.5s var(--ease) backwards;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease),
+    border-color 0.2s;
+}
+
+.budget-grid .budget-card:nth-child(1) { animation-delay: 0.15s; }
+.budget-grid .budget-card:nth-child(2) { animation-delay: 0.22s; }
+.budget-grid .budget-card:nth-child(3) { animation-delay: 0.29s; }
+.budget-grid .budget-card:nth-child(4) { animation-delay: 0.36s; }
+.budget-grid .budget-card:nth-child(5) { animation-delay: 0.43s; }
+.budget-grid .budget-card:nth-child(n+6) { animation-delay: 0.5s; }
+
+.budget-grid .budget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg), -6px 0 22px rgba(52, 211, 153, 0.16);
+}
+
+.budget-grid .budget-card:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+/* ---------- Purchases ---------- */
+
+.purchase-list {
+  box-shadow: var(--shadow-sm);
+  animation: riseIn 0.45s var(--ease) backwards;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s, border-color 0.2s;
+}
+
+.purchase-list:nth-child(2) { animation-delay: 0.15s; }
+.purchase-list:nth-child(3) { animation-delay: 0.2s; }
+.purchase-list:nth-child(4) { animation-delay: 0.25s; }
+.purchase-list:nth-child(5) { animation-delay: 0.3s; }
+.purchase-list:nth-child(n+6) { animation-delay: 0.35s; }
+
+.purchase-list:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- Progress bar ---------- */
+
+.progress-fill {
+  transform-origin: left center;
+  animation: growX 0.9s var(--ease) 0.3s backwards;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Buttons ---------- */
+
+button,
+.btn,
+.budget-cta {
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, transform 0.2s var(--ease), box-shadow 0.2s ease;
+}
+
+button:hover,
+.budget-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-primary);
+}
+
+button:active,
+.budget-cta:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}
+
+/* quieter shadows for secondary, destructive and nav buttons */
+button[type='button']:hover,
+.btn-secondary:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-cancel:hover {
+  box-shadow: 0 8px 18px rgba(248, 113, 113, 0.25);
+}
+
+header button.menu-toggle:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.purchase > button:hover {
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.25);
+}
+
+.purchase-list button:hover {
+  box-shadow: 0 6px 14px rgba(248, 113, 113, 0.22);
+}
+
+/* ---------- Inputs ---------- */
+
+input,
+select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.2s var(--ease), background-color 0.2s ease;
+}
+
+input:hover,
+select:hover {
+  border-color: rgba(99, 102, 241, 0.45);
+}
+
+input:focus,
+select:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), var(--shadow-sm);
+}
+
+/* ---------- Accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

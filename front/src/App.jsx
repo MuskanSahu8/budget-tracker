@@ -56,7 +56,10 @@ const App = () => {
               path: "/budget/:budgetId",
               element: <BudgetDetails />
             },
-
+            {
+              path: "/editbudget/:id",
+              element: <CreateBudget />   // reuse the create form for editing
+            },
             {
               path: "/purchase/create",
               element: <BudgetDetails />

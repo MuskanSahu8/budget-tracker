@@ -11,8 +11,9 @@ import cors from "cors";
 const app = express();
 dotenv.config();
 
-app.use(cors({
-  origin: "https://budget-tracker-sepia-five.vercel.app",
+app.use(cors({ 
+  origin: "http://localhost:5173",
+  //  origin: "https://budget-tracker-sepia-five.vercel.app",
   credentials: true,
 })); 
 

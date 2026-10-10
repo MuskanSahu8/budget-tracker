@@ -1,231 +1,248 @@
-import React, { use, useEffect, useState } from 'react'
-import apiClient from '../ApiClient/interceptor'
+import React, { useEffect, useState } from "react";
+import apiClient from "../ApiClient/interceptor";
+import { useNavigate, useParams } from "react-router-dom";
+
+const MONTHS = [
+  { value: 1, name: "January" },
+  { value: 2, name: "February" },
+  { value: 3, name: "March" },
+  { value: 4, name: "April" },
+  { value: 5, name: "May" },
+  { value: 6, name: "June" },
+  { value: 7, name: "July" },
+  { value: 8, name: "August" },
+  { value: 9, name: "September" },
+  { value: 10, name: "October" },
+  { value: 11, name: "November" },
+  { value: 12, name: "December" },
+];
 
 const CreateBudget = () => {
+  const navigate = useNavigate();
+  const { id } = useParams(); // present only on /editbudget/:id
+  const isEdit = Boolean(id);
 
-  const [categories, setCategories] = useState([])
-  const [categoryLoader, setCategoryLoader] = useState(true)
-  const [createCategory, setCreateCategory] = useState(false)
+  const [categories, setCategories] = useState([]);
+  const [categoryLoader, setCategoryLoader] = useState(true);
+  const [createCategory, setCreateCategory] = useState(false);
   const [createCategoryData, setCreateCategoryData] = useState({
-    category: " "
-  })
-  // create budget
+    category: "",
+  });
+
   const [budgetData, setBudgetData] = useState({
     category: "",
     amount: "",
     month: "",
-    year: ""
+    year: "",
+  });
 
-  })
-  //get buget
-  const [savedBudget, setSavedBudget] = useState([])
+  const [submitting, setSubmitting] = useState(false);
 
   const getCategories = async () => {
     try {
-      const response = await apiClient.get("/category/get")
+      const response = await apiClient.get("/category/get");
       setCategories(response.data.data);
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     } finally {
-      setCategoryLoader(false)
+      setCategoryLoader(false);
     }
-  }
-  //to get the data permanently from backend
+  };
+
+  // when editing, load the budget and prefill the form
+  const getBudgetForEdit = async () => {
+    try {
+      const response = await apiClient.get(`/budget/get/${id}`);
+      const b = response.data.data;
+
+      setBudgetData({
+        category: b.category?._id || b.category || "",
+        amount: b.amount ?? "",
+        month: b.month ?? "",
+        year: b.year ?? "",
+      });
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+      alert(error.response?.data?.message || "Failed to load budget");
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
-    getCategories()
-    getBudget()
-  }, [])
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    if (isEdit) getBudgetForEdit();
+  }, [id]);
+
   const handleCategoryChange = (e) => {
     setCreateCategoryData({
       ...createCategoryData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleCategorySubmit = async (e) => {
     e.preventDefault();
     try {
-      await apiClient.post("/category/create", createCategoryData)
+      await apiClient.post("/category/create", createCategoryData);
       getCategories();
-      setCreateCategoryData({
-        category: " "
-      })
+      setCreateCategoryData({ category: "" });
       setCreateCategory(false);
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
-  const month = [
-    {
-      value: 1,
-      name: "January"
-    },
-    {
-      value: 2,
-      name: "February"
-    },
-    {
-      value: 3,
-      name: "March"
-    },
-    {
-      value: 4,
-      name: "April"
-    },
-    {
-      value: 5,
-      name: "May"
-    },
-    {
-      value: 6,
-      name: "June"
-    },
-    {
-      value: 7,
-      name: "July"
-    },
-    {
-      value: 8,
-      name: "August"
-    }, {
-      value: 9,
-      name: "September"
-    },
-    {
-      value: 10,
-      name: "October"
-    },
-    {
-      value: 11,
-      name: "November"
-    },
-    {
-      value: 12,
-      name: "December"
-    }
-  ]
-  const handleChange = (e) => {
-    setBudgetData({
-      ...budgetData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const submitBudget = async (e) => {
-    e.preventDefault();
-    console.log("Sending budget:", budgetData);
-    try {
-      const response = await apiClient.post(
-        "/budget/create",
-        budgetData);
-      console.log(response.data);
-
-      setBudgetData({
-        category: "",
-        amount: "",
-        month: "",
-        year: "",
-      })
-      getBudget();
     } catch (error) {
       console.log(error.message);
     }
+  };
 
-  }
-  const getBudget = async () => {
+  const handleChange = (e) => {
+    setBudgetData({
+      ...budgetData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitBudget = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await apiClient.get("/budget/get")
-      setSavedBudget(response.data.data)
-    } catch (error) {
-      console.log(error.message)
-    }
+      setSubmitting(true);
 
-  }
+      if (isEdit) {
+        await apiClient.put(`/budget/${id}`, budgetData);
+        navigate("/");
+      } else {
+        await apiClient.post("/budget/create", budgetData);
+        navigate("/budget");
+      }
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+      alert(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <main>
-        <h1>create your budget here</h1>
+        <h1>{isEdit ? "Edit your budget" : "Create your budget here"}</h1>
+
         <form onSubmit={submitBudget}>
           <div className="category">
-            <label>category</label>
-           {categoryLoader ? (
-  <select disabled>
-    <option>Loading...</option>
-  </select>
-) : categories.length === 0 ? (
-  <select disabled>
-    <option>No categories available</option>
-  </select>
-) : (
-  <select
-    name="category"
-    value={budgetData.category}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select category
-    </option>
+            <label>Category</label>
 
-    {categories.map((cat) => (
-      <option key={cat._id} value={cat._id}>
-        {cat.category}
-      </option>
-    ))}
-  </select>
-)}
+            {categoryLoader ? (
+              <select disabled>
+                <option>Loading...</option>
+              </select>
+            ) : categories.length === 0 ? (
+              <select disabled>
+                <option>No categories available</option>
+              </select>
+            ) : (
+              <select
+                name="category"
+                value={budgetData.category}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select category
+                </option>
+
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.category}
+                  </option>
+                ))}
+              </select>
+            )}
+
             <div className="create-category">
-              {
-                createCategory ? (
-                  <>
-                    <input type='text' placeholder="Enter new category" onChange={handleCategoryChange} name='category' value={createCategoryData.category} />{" "}
-                    <button onClick={handleCategorySubmit}>save</button>
-                    <button type="button" className="btn-cancel" onClick={() => setCreateCategory(!createCategory)}>
-                      cancel
-                    </button>
-                  </>
-                ) : (
-                  <button onClick={() => setCreateCategory(!createCategory)}>
-                    create category
+              {createCategory ? (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Enter new category"
+                    onChange={handleCategoryChange}
+                    name="category"
+                    value={createCategoryData.category}
+                  />{" "}
+                  <button type="button" onClick={handleCategorySubmit}>
+                    save
                   </button>
-                )
-              }
+                  <button
+                    type="button"
+                    className="btn-cancel"
+                    onClick={() => setCreateCategory(false)}
+                  >
+                    cancel
+                  </button>
+                </>
+              ) : (
+                <button type="button" onClick={() => setCreateCategory(true)}>
+                  create category
+                </button>
+              )}
             </div>
           </div>
+
           <div className="form-group">
-            <label>amount</label>
-            <input type="string" placeholder='enter your budget' value={budgetData.amount} name="amount" onChange={handleChange} />
+            <label>Amount</label>
+            <input
+              type="number"
+              min="0"
+              placeholder="Enter your budget"
+              value={budgetData.amount}
+              name="amount"
+              onChange={handleChange}
+            />
           </div>
+
           <div className="month">
-  <label>Month</label>
+            <label>Month</label>
 
-  <select
-    name="month"
-    value={budgetData.month}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select month
-    </option>
+            <select
+              name="month"
+              value={budgetData.month}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                Select month
+              </option>
 
-    {month.map((item) => (
-      <option key={item.value} value={item.value}>
-        {item.name}
-      </option>
-    ))}
-  </select>
-</div>
-          <div className="year">
-            <label>year</label>
-            <input type="number" placeholder='enter year' min="2026" max="2040" onChange={handleChange} name='year' value={budgetData.year} />
+              {MONTHS.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
           </div>
-          <button type='submit'>create Budget</button>
+
+          <div className="year">
+            <label>Year</label>
+            <input
+              type="number"
+              placeholder="Enter year"
+              min="2026"
+              max="2040"
+              onChange={handleChange}
+              name="year"
+              value={budgetData.year}
+            />
+          </div>
+
+          <button type="submit" disabled={submitting}>
+            {submitting
+              ? "Saving..."
+              : isEdit
+              ? "Update Budget"
+              : "Create Budget"}
+          </button>
         </form>
       </main>
-
     </>
-  )
-}
+  );
+};
 
-
-export default CreateBudget
+export default CreateBudget;
