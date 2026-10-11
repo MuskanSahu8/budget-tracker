@@ -1,16 +1,55 @@
-# React + Vite
+# Budget Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack **MERN (MongoDB, Express, React, Node.js)** application designed to help users efficiently track , manage daily expenses, and gain visual insights into their financial health.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* **User Authentication:** Secure signup and login functionality.
+* **Transaction Management:** Add, edit, and delete expense items.
+* **Dynamic Budgeting:** Set monthly budget caps and receive warnings when thresholds are approached.
+* **Visual Analytics:** Interactive charts showcasing spending by category (Food, Rent, Utilities, Entertainment, etc.).
+* **Responsive Layout:** Optimized for both desktop and mobile viewing windows.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Frontend:** React.js, Context API / Redux, Axios, CSS Modules / Tailwind CSS
+* **Backend:** Node.js, Express.js
+* **Database:** MongoDB with Mongoose ODM
+* **Security:** JSON Web Tokens (JWT) for session authentication, bcrypt for password hashing
 
-## Expanding the ESLint configuration
+## 📦 Installation & Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Follow these steps to run the application locally.
+
+### Prerequisites
+* [Node.js](https://nodejs.org/) installed
+* [MongoDB](https://www.mongodb.com/try/download/community) instance running locally or a MongoDB Atlas URI
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/MuskanSahu8/budget-tracker.git
+cd budget-tracker
+```
+
+### 2. Configure Environment Variables
+Create a `.env` file in the **root of your backend folder** and populate it with your configuration keys:
+```env
+```
+
+### 3. Install Dependencies & Run
+**For the Backend:**
+```bash
+cd back
+npm install
+npm start
+```
+
+**For the Frontend:**
+```bash
+cd ../front
+npm install
+npm start
+```
+
+## 🔒 Security Practices Notice
+This repository contains a `.gitignore` file to ensure sensitive configurations (`.env`, `node_modules/`) are never tracked or exposed publicly on GitHub.
