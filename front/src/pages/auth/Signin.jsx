@@ -58,17 +58,17 @@ const Signin = () => {
       <div className="signinInfo">
         <h1>Take Control of Your Money 💰</h1>
 
-        <p>
+        <span className="accent">
           Manage your finances easily with our Budget Tracker.
           Keep track of your income, expenses and monthly budget
           all in one place.
-        </p>
+        </span>
 
         <div className="features">
-          <p>📊 Track your expenses</p>
-          <p>💵 Manage your monthly budget</p>
-          <p>📈 Understand your spending</p>
-          <p>🎯 Reach your financial goals</p>
+           <p> <span className="icon">📊</span> Track your expenses</p>
+          <p> <span className="icon">💵</span> Manage your monthly budget</p>
+          <p> <span className="icon">📈</span> Understand your spending habits</p>
+          <p> <span className="icon">🎯</span> Work towards your financial goals</p>
         </div>
       </div>
 
